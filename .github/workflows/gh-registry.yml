@@ -75,15 +75,15 @@ jobs:
     steps:
       - uses: actions/setup-java@v1
         with:
-            java-version: 1.11
+            java-version: 1.8
       - name: 'Copy Settings'
         run: cp ~/.m2/settings.xml settings.xml
       - name: Maven install
-        run: mvn -Dmaven.compiler.s ource=11 -Dmaven.compiler.target=11 install
+        run: mvn clean install
         working-directory: 'hello-strongbox-maven'
       # This is seperate so it may only be deployed conditionally
       - name: Maven deploy
-        run: mvn -Dmaven.compiler.source=11 -Dmaven.compiler.target=11 deploy
+        run: mvn deploy
         working-directory: 'hello-strongbox-maven'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
