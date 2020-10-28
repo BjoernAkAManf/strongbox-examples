@@ -84,7 +84,7 @@ jobs:
         working-directory: 'hello-strongbox-maven'
       # This is seperate so it may only be deployed conditionally
       - name: Maven deploy
-        run: mvn -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ env.GITHUB_REPOSITORY }} deploy
+        run: mvn -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/$GITHUB_REPOSITORY deploy
         working-directory: 'hello-strongbox-maven'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
