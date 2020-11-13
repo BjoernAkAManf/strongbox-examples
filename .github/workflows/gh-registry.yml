@@ -77,12 +77,14 @@ jobs:
       - uses: actions/setup-java@v1
         with:
             java-version: 1.8
+      # generate GitHub Package Registry ci-friendly version to avoid collision
+      - run: echo "GPR_VERSION=$(date '+%Y%m%d.%H%M')" >> $GITHUB_ENV
       - name: Maven install
-        run: mvn clean install
+        run: mvn -Dgpr.version=$GPR_VERSION clean install
         working-directory: 'hello-strongbox-maven'
       # This is seperate so it may only be deployed conditionally
       - name: Maven deploy
-        run: mvn -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/$GITHUB_REPOSITORY deploy
+        run: mvn -Dgpr.version=$GPR_VERSION -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/$GITHUB_REPOSITORY deploy
         working-directory: 'hello-strongbox-maven'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
